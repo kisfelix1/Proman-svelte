@@ -1,4 +1,5 @@
 <script>
+	import Board from './Board.svelte';
 	async function apiGet(url) {
   		let response = await fetch(url, {method: "GET"});
 		if (response.status === 200) {
@@ -10,13 +11,13 @@
 		return respone;
 	}
 	let boardPromise = getBoards();
-</script> 
+</script>
 <div>
 	{#await boardPromise}
 	<p>Loading</p>
 	{:then boards}
 		{#each boards as board}
-			 <h1>{board.title}</h1>
+			<Board boardID="{board.id}" title="{board.title}"/>
 		{/each}
 	{:catch}
 		<p style="color: red">Something terrible happened! Check if your server is running</p>
