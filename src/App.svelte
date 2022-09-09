@@ -1,25 +1,29 @@
 <script>
-	import Board from './Board.svelte';
+	console.log("asdasd");
+	import Board from "./Board.svelte";
 	async function apiGet(url) {
-  		let response = await fetch(url, {method: "GET"});
+		let response = await fetch(url, { method: "GET" });
 		if (response.status === 200) {
 			return response.json();
 		}
 	}
-	async function getBoards(){
-		const respone = await apiGet("http://localhost:105/api/boards");
+	async function getBoards() {
+		const respone = await apiGet("/api/boards");
 		return respone;
 	}
-	let boardPromise = getBoards();
+	$: boardPromise = getBoards();
 </script>
+
 <div>
 	{#await boardPromise}
-	<p>Loading</p>
+		<p>Loading</p>
 	{:then boards}
 		{#each boards as board}
-			<Board boardID="{board.id}" title="{board.title}"/>
+			<Board boardId={board.id} title={board.title} />
 		{/each}
 	{:catch}
-		<p style="color: red">Something terrible happened! Check if your server is running</p>
+		<p style="color: red">
+			Something terrible happened! Check if your server is running
+		</p>
 	{/await}
 </div>

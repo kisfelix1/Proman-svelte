@@ -1,16 +1,21 @@
+from audioop import cross
 import mimetypes
 import os
-
+import sys
+print(sys.path)
 import psycopg2
 from dotenv import load_dotenv
-from flask import Flask, url_for, request
+from flask import Flask, url_for, request, render_template
+
+
 
 import queries
 from util import json_response
 
 mimetypes.add_type('application/javascript', '.js')
-app = Flask(__name__)
+app = Flask(__name__, template_folder='public', static_folder="public")
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
 load_dotenv(".env")
 # payload, execute insert, execute delete
 
@@ -18,9 +23,9 @@ connection_string = 'postgresql://kisfelix:superfighters1@localhost:5432/proman'
 connection = psycopg2.connect(connection_string)
 
 
-@app.route("/a", methods=['GET'])
-def do_nothing():
-    return """asd"""
+@app.route("/", methods=['GET'])
+def index():
+    return render_template("index.html")
 
 
 @app.route("/api/boards")
@@ -29,8 +34,6 @@ def get_boards():
     """
     All the boards
     """
-    import time
-    time.sleep(5)
     return queries.get_boards()
 
 
@@ -120,7 +123,7 @@ def rename_card():
 
 
 def main():
-    app.run(host='0.0.0.0', port=105)
+    app.run(host='localhost', port=5000,debug=True)
 
 
 if __name__ == '__main__':
