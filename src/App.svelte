@@ -1,5 +1,5 @@
 <script>
-	console.log("asdasd");
+	import BoardStore from '../stores/BoardStore.js';
 	import Board from "./Board.svelte";
 	async function apiGet(url) {
 		let response = await fetch(url, { method: "GET" });
@@ -11,11 +11,15 @@
 		const respone = await apiGet("/api/boards");
 		return respone;
 	}
-	$: boardPromise = getBoards();
+	//$: boardPromise = getBoards();
+	let boards = []
+	BoardStore.subscribe((data)=> {
+		boards = data;
+	});
 </script>
 
 <div>
-	{#await boardPromise}
+	{#await boards}
 		<p>Loading</p>
 	{:then boards}
 		{#each boards as board}
