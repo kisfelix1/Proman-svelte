@@ -1,33 +1,20 @@
 <script>
-	import BoardStore from '../stores/BoardStore.js';
-	import Board from "./Board.svelte";
-	async function apiGet(url) {
-		let response = await fetch(url, { method: "GET" });
-		if (response.status === 200) {
-			return response.json();
-		}
-	}
-	async function getBoards() {
-		const respone = await apiGet("/api/boards");
-		return respone;
-	}
-	//$: boardPromise = getBoards();
-	let boards = []
-	BoardStore.subscribe((data)=> {
-		boards = data;
-	});
+	import {getBoards} from '../stores/BoardStore.js';
+	import Board from './Board.svelte';
+	const [data, loading, error, get] = getBoards();
 </script>
+<button on:click="{get}">
+	Show boards
+</button>
 
-<div>
-	{#await boards}
-		<p>Loading</p>
-	{:then boards}
-		{#each boards as board}
-			<Board boardId={board.id} title={board.title} />
-		{/each}
-	{:catch}
-		<p style="color: red">
-			Something terrible happened! Check if your server is running
-		</p>
-	{/await}
-</div>
+
+{#if $loading}
+	{$loading}
+{:else if $error}
+	{$error}
+{:else}
+	{#each $data as board}
+		 <Board boardId="{board.id}" title="{board.title}"></Board>
+	{/each}
+{/if}
+  
