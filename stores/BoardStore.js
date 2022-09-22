@@ -1,18 +1,27 @@
-import { readable, writable } from "svelte/store";
-async function apiGet(url) {
-    let response = await fetch(url, { method: "GET" });
-    if (response.status === 200) {
-        return response.json();
-    }
+import { writable } from "svelte/store";
+export const data = writable({});
+export function getBoards() {
+	const loading = writable(false);
+	const error = writable(false);
+
+	async function get() {
+		loading.set("Hahaha loading");
+		error.set(false);
+		try {
+			const response = await fetch("/api/boards");
+			data.set(await response.json());
+		} catch(e) {
+			error.set(e);
+		}
+		loading.set(false);
+	}
+	get()
+	return [data, loading, error, get];
 }
 
-async function getBoards() {
-    const respone = await apiGet("/api/boards");
-    return respone;
+export function deleteBoard(boardId){
+	async function deleteBoard(boardId) {
+		const response = await fetch(`/api/delete/board/${boardId}`,{method: "DELETE"});
+	}
+	deleteBoard(boardId);
 }
-const boards = getBoards();
-const BoardStore = writable(
-    boards
-)
-
-export default BoardStore;
