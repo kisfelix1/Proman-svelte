@@ -86,6 +86,7 @@ INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 'done card 1', 1, 1);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 'done card 1', 2, 1);
 
 INSERT INTO users VALUES (DEFAULT, 'jozsi', 'asd');
+INSERT INTO users VALUES (0, 'public user', '');
 ---
 --- add constraints
 ---
