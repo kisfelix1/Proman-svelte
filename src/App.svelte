@@ -2,14 +2,14 @@
 	import {getBoards} from '../stores/BoardStore.js';
 	import Board from './Board.svelte';
 	import {postFetch, getFetch} from './FetchManager.js';
-	const [data, loading, error, get] = getBoards();
+	const [data, loading, error, loadBoards] = getBoards();
 	async function handleCreateBoard(){
 		let response = await postFetch("/api/create/board/0");
 		let newBoard = await getFetch(`/api/board/${response.id}`);
 		data.update(boards => boards.concat(newBoard));
 	}
 </script>
-<button on:click="{get}">
+<button on:click="{loadBoards}">
 	Show All Boards
 </button>
 
