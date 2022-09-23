@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-import { getFetch } from "../src/FetchManager";
+import { getFetch, deleteFetch } from "../src/FetchManager";
 export const data = writable({});
 export function getBoards() {
 	const loading = writable(false);
@@ -20,9 +20,6 @@ export function getBoards() {
 	return [data, loading, error, loadBoards];
 }
 
-export function deleteBoard(boardId){
-	async function deleteBoard(boardId) {
-		const response = await fetch(`/api/delete/board/${boardId}`,{method: "DELETE"});
-	}
-	deleteBoard(boardId);
+export async function deleteBoard(boardId){
+	await deleteFetch(`/api/delete/board/${boardId}`);
 }

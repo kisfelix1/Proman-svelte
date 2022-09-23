@@ -5,13 +5,12 @@
     export let title;
     let showBoardButtonState = false;
     const [statuses ,loading, error, fetchStatuses] = makeStatusStore(boardId);
-    function handleBoardDelete(boardIdToDelete){
-        deleteBoard(boardIdToDelete);
+    async function handleBoardDelete(boardIdToDelete){
+        await deleteBoard(boardIdToDelete);
         if(boardId == boardIdToDelete){
             data.update(data => data.filter((board) => board.id != boardId));
         }
     }
-
     function handleShowCards(boardId){
         showBoardButtonState = !showBoardButtonState;
         showBoardButtonState ? fetchStatuses(boardId) : statuses.update(data=> data.filter(status => status.board_id != boardId))

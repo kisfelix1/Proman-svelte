@@ -17,3 +17,10 @@ export async function getFetch(url){
         return response.json();
     };
 }
+
+export async function deleteFetch(url) {
+    const response = await fetch(url,{method: "DELETE"});
+    if (response.status === 200) {
+        return response.json();
+    };
+}
