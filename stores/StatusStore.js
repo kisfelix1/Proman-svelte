@@ -1,4 +1,5 @@
 import { writable } from "svelte/store";
+import { getFetch } from "../src/FetchManager";
 export const statuses = writable([]);
 export function makeStatusStore() {
 	const loading = writable(false);
@@ -7,8 +8,7 @@ export function makeStatusStore() {
 		loading.set("Loading statuses");
 		error.set(false);
 		try {
-			const response = await fetch(`/api/${boardId}/statuses`);
-            const value = await response.json();
+			const value = await getFetch(`/api/${boardId}/statuses`);
 			statuses.update(data => data.concat(value));
 		} catch(e) {
 			error.set(e);
