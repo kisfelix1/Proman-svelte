@@ -4,10 +4,10 @@
 	const [data, loading, error, get] = getBoards();
 </script>
 <button on:click="{get}">
-	Show boards
+	Show All Boards
 </button>
 
-
+<div class="board-container"><button id="create-board">Create new board</button>
 {#if $loading}
 	{$loading}
 {:else if $error}
@@ -17,4 +17,5 @@
 		 <Board boardId="{board.id}" title="{board.title}"></Board>
 	{/each}
 {/if}
+</div>
   
