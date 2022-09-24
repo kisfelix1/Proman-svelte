@@ -1,6 +1,8 @@
 <script>
+    import {cards, fetchCards } from "../stores/CardStore";
     import {deleteBoard, renameBoard, data} from '../stores/BoardStore.js';
     import {makeStatusStore} from '../stores/StatusStore.js';
+    import Status from './Status.svelte';
     export let boardId;
     export let title;
     let editingTitle = false;
@@ -12,10 +14,13 @@
             data.update(data => data.filter((board) => board.id != boardId));
         }
     }
+
     function handleShowCards(boardId){
         showBoardButtonState = !showBoardButtonState;
         showBoardButtonState ? fetchStatuses(boardId) : statuses.update(data=> data.filter(status => status.board_id != boardId))
+        showBoardButtonState ? fetchCards(boardId) : cards.update(data=> data.filter(card => card.board_id != boardId))
     }
+
     function handleEditTitle(boardId){
         editingTitle=false;
         renameBoard(boardId, title);
@@ -43,9 +48,7 @@
         {:else}
             {#each $statuses as status}
                 {#if status.board_id == boardId}
-                    <div class="board-column" data-status-id="${status.id}" data-position="${status.position}"></div>
-                    <div class="board-column-title">{status.title}</div>    
-                    <div class="board-column-content"></div>
+                    <Status title="{status.title}" boardId="{boardId}" position="{status.position}"></Status>
                 {/if}
             {/each}
         {/if}
