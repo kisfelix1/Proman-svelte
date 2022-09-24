@@ -1,8 +1,9 @@
 <script>
-    import {deleteBoard, data} from '../stores/BoardStore.js';
+    import {deleteBoard, renameBoard, data} from '../stores/BoardStore.js';
     import {makeStatusStore} from '../stores/StatusStore.js';
     export let boardId;
     export let title;
+    let editingTitle = false;
     let showBoardButtonState = false;
     const [statuses ,loading, error, fetchStatuses] = makeStatusStore(boardId);
     async function handleBoardDelete(boardIdToDelete){
@@ -15,11 +16,21 @@
         showBoardButtonState = !showBoardButtonState;
         showBoardButtonState ? fetchStatuses(boardId) : statuses.update(data=> data.filter(status => status.board_id != boardId))
     }
+    function handleEditTitle(boardId){
+        editingTitle=false;
+        renameBoard(boardId, title);
+    }
 </script>
 
 <section class="board" data-board-id="{boardId}">
     <div class="board-header">
-    <span class="board-title" data-board-id="{boardId}">{title}</span>
+    <span class="board-title" data-board-id="{boardId}" on:click={() => editingTitle = true}>
+        {#if editingTitle}
+             <input type="text" bind:value={title} on:blur={() => {handleEditTitle(boardId)}}>
+        {:else}
+             {title}
+        {/if}
+    </span>
     <button class="board-add" data-board-id="{boardId}">Add Card</button>
     <button class="board-remove" data-board-id="{boardId}" on:click={()=>{handleBoardDelete(boardId);}}>Delete board</button>
     <button class="toggle-board-button board-toggle" on:click={()=>{handleShowCards(boardId);}}>Show Cards</button>
