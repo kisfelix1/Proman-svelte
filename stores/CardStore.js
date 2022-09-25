@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-import { getFetch } from "../src/FetchManager";
+import { getFetch, deleteFetch } from "../src/FetchManager";
 export const cards = writable([]);
 export function makeCardsStore() {
 	const loading = writable(false);
@@ -21,4 +21,9 @@ export function makeCardsStore() {
 export async function fetchCards(boardId) {
 	const value = await getFetch(`/api/boards/${boardId}/cards/`);
 	cards.update(data => data.concat(value));
+}
+
+export async function deleteCard(cardId){
+	await deleteFetch(`/api/remove/card/${cardId}`);
+	cards.update(cards => cards.filter(card => card.id != cardId));
 }
