@@ -39,7 +39,7 @@
     </span>
     <button class="board-add" data-board-id="{boardId}" on:click={() => addCard(boardId)}>Add Card</button>
     <button class="board-remove" data-board-id="{boardId}" on:click={()=>{handleBoardDelete(boardId);}}>Delete board</button>
-    <button class="toggle-board-button board-toggle" on:click={()=>{handleShowCards(boardId);}}>Show Cards</button>
+    <button class="toggle-board-button board-toggle" on:click={()=>{handleShowCards(boardId);}}>{showBoardButtonState ? "Hide Cards" : "Show Cards"}</button>
     </div>
     <div class="board-columns">
         {#if $loading}
