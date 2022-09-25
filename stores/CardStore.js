@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-import { getFetch, deleteFetch, putFetch } from "../src/FetchManager";
+import { getFetch, deleteFetch, putFetch, postFetch } from "../src/FetchManager";
 export const cards = writable([]);
 export function makeCardsStore() {
 	const loading = writable(false);
@@ -30,4 +30,9 @@ export async function deleteCard(cardId){
 
 export async function renameCard(cardId, newTitle){
 	await putFetch("/api/card/rename", {'id':cardId, 'title': newTitle});
+}
+
+export async function addCard(boardId){
+	const newCard = await postFetch(`/api/create/card/${boardId}`);
+	cards.update(data => data.concat(newCard));
 }
