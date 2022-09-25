@@ -12,7 +12,7 @@
     <div class="board-column-content">
         {#each $cards as card}
             {#if card.board_id == boardId && card.position == position}
-                <Card title="{card.title}"></Card>
+                <Card title="{card.title}" cardId="{card.id}"></Card>
             {/if}
         {/each}
     </div>
