@@ -1,5 +1,5 @@
 <script>
-    import {cards, fetchCards } from "../stores/CardStore";
+    import {cards, fetchCards, addCard } from "../stores/CardStore";
     import {deleteBoard, renameBoard, data} from '../stores/BoardStore.js';
     import {makeStatusStore} from '../stores/StatusStore.js';
     import Status from './Status.svelte';
@@ -8,6 +8,7 @@
     let editingTitle = false;
     let showBoardButtonState = false;
     const [statuses ,loading, error, fetchStatuses] = makeStatusStore(boardId);
+
     async function handleBoardDelete(boardIdToDelete){
         await deleteBoard(boardIdToDelete);
         if(boardId == boardIdToDelete){
@@ -36,7 +37,7 @@
              {title}
         {/if}
     </span>
-    <button class="board-add" data-board-id="{boardId}">Add Card</button>
+    <button class="board-add" data-board-id="{boardId}" on:click={() => addCard(boardId)}>Add Card</button>
     <button class="board-remove" data-board-id="{boardId}" on:click={()=>{handleBoardDelete(boardId);}}>Delete board</button>
     <button class="toggle-board-button board-toggle" on:click={()=>{handleShowCards(boardId);}}>Show Cards</button>
     </div>
