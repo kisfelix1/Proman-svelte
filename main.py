@@ -71,7 +71,7 @@ def get_statuses_by_board_id(board_id):
     return queries.get_statuses_by_board_id(board_id)
 
 
-@app.route("/api/remove/card/<int:card_id>", methods=["POST"])
+@app.route("/api/remove/card/<int:card_id>", methods=["DELETE"])
 @json_response
 def remove_card(card_id):
     return queries.remove_card_by_id(card_id)
