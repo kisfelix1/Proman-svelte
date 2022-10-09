@@ -104,7 +104,7 @@ def update_card_position(card_id, position):
 def create_card(board_id):
     return data_manager.execute_select("""
     INSERT INTO cards
-    VALUES(DEFAULT, %(board_id)s, 'new card', 1, 1) RETURNING id;""", {'board_id': board_id}, fetchall=False)
+    VALUES(DEFAULT, %(board_id)s, 'new card', 1, 1) RETURNING *;""", {'board_id': board_id}, fetchall=False)
 
 
 def get_card_by_id(card_id):
