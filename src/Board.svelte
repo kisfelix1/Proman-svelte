@@ -3,6 +3,8 @@
     import {deleteBoard, renameBoard, data} from '../stores/BoardStore.js';
     import {makeStatusStore} from '../stores/StatusStore.js';
     import Status from './Status.svelte';
+    import { writable } from "svelte/store";
+    const progress = writable(0);
     export let boardId;
     export let title;
     let editingTitle = false;
@@ -27,14 +29,14 @@
         renameBoard(boardId, title);
     }
 </script>
-
 <section class="board" data-board-id="{boardId}">
+    <progress class="board-progress" value="{$progress}"></progress>
     <div class="board-header">
     <span class="board-title" data-board-id="{boardId}" on:click={() => editingTitle = true}>
         {#if editingTitle}
-             <input type="text" bind:value={title} on:blur={() => {handleEditTitle(boardId)}}>
+            <input type="text" bind:value={title} on:blur={() => {handleEditTitle(boardId)}}>
         {:else}
-             {title}
+            {title}
         {/if}
     </span>
     <button class="board-add" data-board-id="{boardId}" on:click={() => addCard(boardId)}>Add Card</button>
