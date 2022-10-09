@@ -139,3 +139,9 @@ section.board{
     padding-right: 16px;
     padding-left: 4px;
 }
+
+.board-progress{
+    align-items: center;
+    vertical-align: middle;
+    width: 100%;
+}
