@@ -14,7 +14,7 @@ from util import json_response
 
 mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__, template_folder='public', static_folder="public")
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.secret_key = b'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'
 
 load_dotenv(".env")
 # payload, execute insert, execute delete
