@@ -8,7 +8,7 @@
 
 
 <div class="board-column">
-    <div class="board-column-title">{title}</div>    
+    <div class="board-column-title">{title}</div>
     <div class="board-column-content">
         {#each $cards as card}
             {#if card.board_id == boardId && card.position == position}
