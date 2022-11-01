@@ -145,3 +145,33 @@ section.board{
     vertical-align: middle;
     width: 100%;
 }
+
+.filler{
+    position:absolute;
+    height:100%;
+    width:100%;
+}
+
+.login-container{
+    margin: auto;
+    width: 50%;
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.login-item{
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+}
+.login-title{
+    display:flex;
+}
+
+.g_id_signin{
+    display: flex;
+}
